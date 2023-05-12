@@ -1,8 +1,12 @@
 import requests
 import json
+import base64
 
 MAX_RESULTS = 100
 MAX_PAGES = 43
+
+cred =  "Basic " + base64.b64encode(b'email@aft.org:<raw-api-key>').decode("utf-8")
+
 
 # JSON PRINT HELPER #
 def jprint(output):
@@ -24,7 +28,7 @@ f = open("id_file.txt", "a")
 start_record = 0
 while start_record <= MAX_PAGES:
     url = f'https://aftmda.atlassian.net/rest/api/3/field/customfield_10066/context/10219/option?startAt={start_record*MAX_RESULTS}'
-    headers = {"Authorization": "Basic {BASE64_ENCODED_API_KEY}"}
+    headers = {"Authorization": cred}
     response = requests.get(url, headers=headers)
     json_data = response.json()
     
